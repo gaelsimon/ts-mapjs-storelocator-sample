@@ -20,9 +20,6 @@ export default defineConfig({
 
         if (browser.name === 'chrome' && browser.isHeadless) {
           launchOptions.args.push(`--window-size=${width},${height}`);
-
-          // force screen to be non-retina and just use our given resolution
-          launchOptions.args.push('--force-device-scale-factor=1');
         }
 
         if (browser.name === 'electron' && browser.isHeadless) {

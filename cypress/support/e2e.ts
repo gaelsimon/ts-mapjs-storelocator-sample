@@ -2,12 +2,6 @@
 // @ts-ignore
 import './commands'
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-    console.log(err);
-    console.log(runnable);
-    return false
-})
-
 Cypress.on(`window:before:load`, win => {
     cy.stub(win.console, `error`).callsFake(msg => {
         cy.now(`task`, `error`, msg);
