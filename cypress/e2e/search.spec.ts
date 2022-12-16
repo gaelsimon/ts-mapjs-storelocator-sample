@@ -16,5 +16,4 @@ describe('Searching for locality Use Case', () => {
         cy.searchLocality(searchInput.paris);
         cy.get(`#${Selectors.listStoresContainerID}`).should('be.visible');
     })
-
 })
