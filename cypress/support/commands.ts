@@ -7,7 +7,7 @@ Cypress.Commands.add("getStoreLocator", () => {
 });
 
 Cypress.Commands.add("searchLocality", (input: string) => {
-    cy.get(`#${Selectors.searchInputID}`)
+    cy.get(`#${Selectors.searchInputID}`).should('be.visible')
         .type(input)
     cy.get(`.localities-container li[tabindex=1]`).should('be.visible')
     cy.get(`#${Selectors.searchInputID}`)
