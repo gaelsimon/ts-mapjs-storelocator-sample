@@ -11,9 +11,9 @@ describe('Searching for locality Use Case', () => {
     before(() => {
         cy.visit('http://localhost:1234/')
     })
-    it(`search for ${searchInput.paris} in Localities Widget and display nearby stores`, () => {
+    it(`search for ${searchInput.montpellier} in Localities Widget and display nearby stores`, () => {
         cy.get(`head script[src="${localitiesJSUrl}"]`).should('exist');
-        cy.searchLocality(searchInput.paris);
+        cy.searchLocality(searchInput.montpellier);
         cy.get(`#${Selectors.listStoresContainerID}`).should('be.visible');
     })
 })

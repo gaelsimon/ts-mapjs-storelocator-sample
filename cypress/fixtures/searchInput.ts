@@ -1,4 +1,5 @@
 export default {
     london: "London, United Kingdom",
-    paris: "Paris, France"
+    paris: "Paris, France",
+    montpellier: "Montpellier, Hérault, France"
 };
