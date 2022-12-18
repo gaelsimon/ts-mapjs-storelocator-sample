@@ -10,6 +10,8 @@ describe('Opening Store Locator', () => {
     before(() => {
         cy.intercept('GET', 'https://api.woosmap.com/**/*')
             .as('woosmapAPI');
+        cy.intercept('GET', 'https://sdk.woosmap.com/**/*')
+            .as('woosmapSDK');
 
         cy.visit('http://localhost:1234/')
     })
@@ -19,7 +21,11 @@ describe('Opening Store Locator', () => {
             .then((interception) => {
                 expect(interception.response?.statusCode).to.equal(200);
             });
-        cy.wait(2000);
+        cy.wait('@woosmapSDK')
+            .then((interception) => {
+                expect(interception.response?.statusCode).to.equal(200);
+            });
+        cy.wait(5000);
 
         it('Check Map JS Library', () => {
             cy.get(`head script[src="${mapJSUrl}"]`).should('exist');
