@@ -35,7 +35,7 @@
     "@types/woosmap.map": "^1.4.0",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
-    "cypress": "^12.0.2",
+    "cypress": "^12.1.0",
     "lint-staged": "^13.0.3",
     "parcel": "^2.8.2",
     "start-server-and-test": "^1.15.2"
