@@ -2,11 +2,10 @@ import {defineConfig} from "cypress";
 
 
 export default defineConfig({
-    video: false,
+    video: true,
     modifyObstructiveCode: false,
     e2e: {
         setupNodeEvents(on, config) {
-            // bind to the event we care about
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             on('before:browser:launch', (browser = {}, launchOptions) => {
@@ -33,16 +32,6 @@ export default defineConfig({
                     launchOptions.args.push(`--width=${width}`);
                     launchOptions.args.push(`--height=${height}`);
                 }
-
-                // CI may have problems with gpu acceleration; example
-                //    - ERROR:gpu_memory_buffer_support_x11.cc(44)] dri3 extension not supported.
-                if (browser.isHeadless)
-                    if (browser.family === 'chromium') {
-                        launchOptions.args.push('--disable-gpu');
-                        launchOptions.args.push('--disable-software-rasterizer');
-                        launchOptions.args.push('--no-sandbox');
-                        console.log('Setting chromium family launch options to disable gpu, software rasterizer, and sandbox.');
-                    }
 
                 return launchOptions;
             });
