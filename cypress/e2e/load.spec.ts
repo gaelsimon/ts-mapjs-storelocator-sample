@@ -13,6 +13,12 @@ describe('Opening Store Locator', () => {
         cy.intercept('GET', 'https://sdk.woosmap.com/**/*')
             .as('woosmapSDK');
 
+        cy.intercept({
+            method: 'GET',
+            url: 'https://sdk.woosmap.com/map/assets/sprite@2x.png',
+        }, {fixture: "../../cypress/fixtures/sprite@2x.png"}).as('imageRequest')
+
+
         cy.visit('http://localhost:1234/')
     })
     it('Check the scripts loading', () => {

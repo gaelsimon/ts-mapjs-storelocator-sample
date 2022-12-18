@@ -11,6 +11,13 @@ describe('Searching for locality Use Case', () => {
     before(() => {
         cy.intercept('GET', 'https://api.woosmap.com/**/*')
             .as('woosmapAPI');
+
+        cy.intercept({
+            method: 'GET',
+            url: 'https://sdk.woosmap.com/map/assets/sprite@2x.png',
+        }, {fixture: "../../cypress/fixtures/sprite@2x.png"}).as('imageRequest')
+
+
         cy.visit('http://localhost:1234/')
     })
     it(`search for ${searchInput.london} in Localities Widget and display nearby stores`, () => {
