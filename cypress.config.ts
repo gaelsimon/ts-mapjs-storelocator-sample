@@ -4,6 +4,7 @@ import {defineConfig} from "cypress";
 export default defineConfig({
     video: false,
     modifyObstructiveCode: false,
+    projectId: "wx15tg",
     e2e: {
         setupNodeEvents(on, config) {
             // bind to the event we care about
