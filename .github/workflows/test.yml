@@ -20,7 +20,6 @@ jobs:
           # determine the unique run id necessary to re-run the checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          browser: chrome
           build: npm run build
           start: npm start
 
