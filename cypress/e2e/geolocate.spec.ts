@@ -5,6 +5,8 @@ import Selectors from "../../src/configuration/selectors.config";
 
 describe('Geolocation Use Cases', () => {
     before(() => {
+        cy.intercept('GET', 'https://api.woosmap.com/**/*')
+            .as('woosmapAPI');
         cy.visitWithGeolocation("http://localhost:1234", userLatLng);
     })
     it(`Geolocate the user on click search__geolocateBtn and display Nearby Stores`, () => {
