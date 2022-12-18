@@ -10,6 +10,12 @@ describe('Geolocation Use Cases', () => {
         cy.intercept('GET', 'https://sdk.woosmap.com/**/*')
             .as('woosmapSDK');
 
+        cy.intercept({
+            method: 'GET',
+            url: 'https://sdk.woosmap.com/map/assets/sprite@2x.png',
+        }, {fixture: "../../cypress/fixtures/sprite@2x.png"}).as('imageRequest')
+
+
         cy.visitWithGeolocation("http://localhost:1234", userLatLng);
     })
     it(`Geolocate the user on click search__geolocateBtn and display Nearby Stores`, () => {
