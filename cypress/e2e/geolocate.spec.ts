@@ -28,7 +28,6 @@ describe('Geolocation Use Cases', () => {
             .then((interception) => {
                 expect(interception.response?.statusCode).to.equal(200);
             });
-        cy.wait(5000);
         cy.get(`#${Selectors.searchWrapperID}`)
             .find('.search__geolocateBtn')
             .click()
