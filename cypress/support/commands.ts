@@ -83,4 +83,8 @@ Cypress.Commands.add("visitWaitingMap", (url, options?: Partial<VisitOptions>) =
         .then((interception) => {
             expect(interception.response?.statusCode).to.equal(200);
         });
+    cy.wait('@imageRequest')
+        .then((interception) => {
+            expect(interception.response?.statusCode).to.equal(200);
+        });
 });
