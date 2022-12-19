@@ -46,13 +46,6 @@ Cypress.Commands.add("visitWithGeolocation", (url, coords) => {
 });
 
 Cypress.Commands.add("visitWaitingMap", (url, options?: Partial<VisitOptions>) => {
-
-    // This sprite is causing CI issue so replace with a dummy image
-    cy.intercept({
-        method: 'GET',
-        url: 'https://sdk.woosmap.com/map/assets/sprite@2x.png',
-    }, {fixture: "../../cypress/fixtures/sprite@2x.png"}).as('spriteImage')
-
     cy.intercept('GET', 'https://api.woosmap.com/maps/tiles.json?*', (req) => {
         req.reply(res => {
             res.body = tiles;
