@@ -1,9 +1,12 @@
 /// <reference types="cypress" />
 
 import Selectors from "../../src/configuration/selectors.config";
+import tiles from "../fixtures/tiles";
+import streets from "../fixtures/streets";
+import VisitOptions = Cypress.VisitOptions;
 
 Cypress.Commands.add("getStoreLocator", () => {
-  return cy.window().its("woosmapStoreLocator");
+    return cy.window().its("woosmapStoreLocator");
 });
 
 Cypress.Commands.add("searchLocality", (input: string) => {
@@ -37,7 +40,47 @@ const stubGeolocation = (windowObj: Cypress.AUTWindow, coords: GeolocationCoordi
 };
 
 Cypress.Commands.add("visitWithGeolocation", (url, coords) => {
-    cy.visit(url, {
+    cy.visitWaitingMap(url, {
         onBeforeLoad: windowObj => stubGeolocation(windowObj, coords),
     });
+});
+
+Cypress.Commands.add("visitWaitingMap", (url, options?: Partial<VisitOptions>) => {
+    cy.intercept('GET', 'https://api.woosmap.com/maps/tiles.json?*', (req) => {
+        req.reply(res => {
+            res.body = tiles;
+        })
+    }).as('woosmapTilesJSON');
+
+    cy.intercept('GET', 'https://api.woosmap.com/maps/style/streets.json?*', (req) => {
+        req.reply(res => {
+            res.body = streets;
+        })
+    }).as('woosmapStreetsJSON');
+
+    cy.intercept({
+        method: 'GET',
+        url: '**.pbf'
+    }).as('woosmapTiles');
+
+    // This sprite is causing CI issue so replace with a dummy image
+    cy.intercept({
+        method: 'GET',
+        url: 'https://sdk.woosmap.com/map/assets/sprite@2x.png',
+    }, {fixture: "../../cypress/fixtures/sprite@2x.png"}).as('imageRequest')
+
+    cy.visit(url, options);
+
+    cy.wait('@woosmapTilesJSON')
+        .then((interception) => {
+            expect(interception.response?.statusCode).to.equal(200);
+        });
+    cy.wait('@woosmapStreetsJSON')
+        .then((interception) => {
+            expect(interception.response?.statusCode).to.equal(200);
+        });
+    cy.wait('@woosmapTiles')
+        .then((interception) => {
+            expect(interception.response?.statusCode).to.equal(200);
+        });
 });
