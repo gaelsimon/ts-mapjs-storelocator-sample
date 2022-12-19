@@ -33,16 +33,6 @@ export default defineConfig({
                     launchOptions.args.push(`--height=${height}`);
                 }
 
-                // CI may have problems with gpu acceleration; example
-                //    - ERROR:gpu_memory_buffer_support_x11.cc(44)] dri3 extension not supported.
-                if (browser.isHeadless)
-                    if (browser.family === 'chromium') {
-                        launchOptions.args.push('--disable-gpu');
-                        launchOptions.args.push('--disable-software-rasterizer');
-                        launchOptions.args.push('--no-sandbox');
-                        console.log('Setting chromium family launch options to disable gpu, software rasterizer, and sandbox.');
-                    }
-
                 return launchOptions;
             });
         },
